@@ -1,3 +1,4 @@
+const { generateToken } = require("../scripts/utils");
 const { signUpDB, loginDB } = require("../services/user.service");
 
 const signUp = async (req, res) => {
@@ -44,12 +45,21 @@ const login = async (req, res) => {
   }
 
   try {
-    const data = await loginDB({  email, password });
+    const user = await loginDB({  email, password });
+
+    const {accessToken,refreshToken}=generateToken({
+      id:user._id,
+      name:user.name,
+      email:user.email,
+      role:user.role
+    });
+
     return res.status(201).json({
       success: true,
       message: "login successfully",
-      data: data,
+      data: {accessToken,refreshToken,user},
     });
+
   } catch (error) {
     console.log(error);
     return res.status(500).json({
