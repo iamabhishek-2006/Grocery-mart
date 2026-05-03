@@ -7,12 +7,12 @@ const OrderSchema=new mongoose.Schema({
     paymentStatus:{type:String,enum:["success","failed","pending",],default:"pending"},
     shippingAddress:{type:mongoose.Schema.Types.ObjectId,ref:"Address",required:true},
     orderItems:[{
-        quantity:{type:Number,required:true,min:1},
-        product:{type:mongoose.Schema.Types.ObjectId,ref:"Product",required:true}
+        product:{type:mongoose.Schema.Types.ObjectId,ref:"Product",required:true},
+        quantity:{type:Number,required:true,min:1}
     } ],
     orderStatus:{type:String,enum:["processing","shipped","delivered","cancelled"],default:"processing"}
 },{timestamps:true})
 
 const Order= mongoose.model("Order",OrderSchema);
 
-mongoose.model=Order;
+module.exports=Order;
