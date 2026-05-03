@@ -4,10 +4,10 @@ I build a grocery-mart website using Technologies (MERN) stack
 <p>First I built backend or create API using nodejs and express js</p>
 </hr>
 
-•Node.js - Runtime environment
-•Express.js - Web framework
-•MongoDB - NoSQL database
-•Mongoose - MongoDB object modeling
+<h3>•Node.js - Runtime environment</h1>
+<h3>•Express.js - Web framework</h3>
+<h3>•MongoDB - NoSQL database</h3>
+<h3>•Mongoose - MongoDB object modeling</h3>
 •JWT - Authentication tokens
 •Bcrypt.js - Password hashing
 •SendGrid - Email service
