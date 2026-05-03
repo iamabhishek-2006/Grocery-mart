@@ -5,7 +5,9 @@ I build a grocery-mart website using Technologies (MERN) stack
 </hr>
 
 <h3>•Node.js - Runtime environment</h1>
+<br>
 <h3>•Express.js - Web framework</h3>
+<br>
 <h3>•MongoDB - NoSQL database</h3>
 <h3>•Mongoose - MongoDB object modeling</h3>
 •JWT - Authentication tokens
