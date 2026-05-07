@@ -48,7 +48,7 @@ const getProduct=async(req,res)=>{
   }
   return res.status(200).json({
     success:true,
-    message:"data get successfully",
+    message:"products get successfully",
     data:data
   })
   } catch (error) {

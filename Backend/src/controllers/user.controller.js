@@ -54,6 +54,12 @@ const login = async (req, res) => {
       role:user.role
     });
 
+    res.cookie("accessToken",accessToken,{
+      httpOnly:true,
+      secure:false,
+      sameSite:"lax"
+    })
+
     return res.status(201).json({
       success: true,
       message: "login successfully",
