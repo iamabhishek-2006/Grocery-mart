@@ -21,6 +21,7 @@ app.get("/",(req,res)=>{
 
 app.use("/public",require("./src/routes/public.routes"));
 app.use("/auth",authRoutes);
+app.use("/user",require("./src/routes/users"));
 app.use("/admin",adminRoutes);
 
 app.listen(PORT,()=>{
