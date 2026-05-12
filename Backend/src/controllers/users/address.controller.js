@@ -20,13 +20,13 @@ const addAddress = async (req, res) => {
       data: data,
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+       return res.status(500).json({
+         success: false,
+         error: error.message,
+       });
+    }
   }
-};
+
 
 const getAddress =async (req,res)=>{
     try {

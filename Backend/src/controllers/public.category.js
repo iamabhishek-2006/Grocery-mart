@@ -12,7 +12,7 @@ const getCategories = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: "something went wrong",
+      error: error.message
     });
   }
 };
@@ -23,6 +23,7 @@ const getProducts = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "get Products successfully",
+      data:data
     });
   } catch (error) {
     return res.status(500).json({

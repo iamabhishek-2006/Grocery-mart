@@ -19,7 +19,6 @@ const signUp = async (req, res) => {
       data: data,
     });
   } catch (error) {
-    console.log(error);
     if (error.code === 11000) {
       return res.status(409).json({
         success: false,
@@ -29,7 +28,7 @@ const signUp = async (req, res) => {
 
     return res.status(500).json({
         success:false,
-        error:"something went wrong"
+        error:error.message
     });
   }
 };

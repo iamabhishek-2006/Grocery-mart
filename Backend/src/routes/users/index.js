@@ -4,7 +4,8 @@ const cartRoutes=require("./cart.routes");
 const router=express.Router();
 
 router.use("/cart",cartRoutes);
-router.use("/address",require("./address.routes"))
+router.use("/address",require("./address.routes"));
+router.use("/order",require("./order.routes"));
 
 
 module.exports=router;

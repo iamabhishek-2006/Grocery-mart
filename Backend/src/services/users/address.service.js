@@ -1,8 +1,26 @@
-const Address = require("../../models/address")
+const Address = require("../../models/address");
+const User=require("../../models/user")
 
-const addAddressDB = async ( id, { fullName, phone, line1, line2, landmark, city, state, country, zipCode }) => {
-  return await Address.create({userId: id,fullName,phone,line1,line2,landmark,city,state,country,zipCode,
+const addAddressDB = async (id, { fullName, phone, line1, line2, landmark, city, state, country, zipCode }) => {
+  // check user exists or not
+  const user = await User.findById(id);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const existingAddress = await Address.findOne({
+    userId: id,
+    line1,
+    zipCode,
   });
+
+  if (existingAddress) {
+    throw new Error("Address already exists");
+  }
+
+  const data = new Address({userId: id,fullName,phone,line1,line2,landmark,city,state,country,zipCode});
+  return await data.save();
 };
 
 const getAddressDB=async()=>{
