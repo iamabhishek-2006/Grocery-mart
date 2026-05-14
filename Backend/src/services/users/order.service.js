@@ -3,8 +3,8 @@ const Product = require("../../models/product");
 const User=require("../../models/user");
 
 const placeOrderCODService = async (userId, paymentMethod,totalAmount,shippingAddress,items) => {
-
-  if (!shippingAddress || items.length === 0) {
+   
+  if (!shippingAddress || !items || items.length === 0) {
     throw new Error("Invalid data");
   }
 
@@ -21,8 +21,8 @@ const placeOrderCODService = async (userId, paymentMethod,totalAmount,shippingAd
     return order;
 };
 
-const getOrderDB=async()=>{
-  const data=await Order.find().populate({path:"items.product"}).populate("shippingAddress");
+const getOrderDB=async(id)=>{
+  const data=await Order.find({user:id}).populate({path:"items.product"}).populate("shippingAddress");
   return data;
 };
 

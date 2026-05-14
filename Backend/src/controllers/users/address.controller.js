@@ -1,7 +1,8 @@
 const { addAddressDB, updateAddressDB, removeAddresDB, getAddressDB } = require("../../services/users/address.service");
 
 const addAddress = async (req, res) => {
-  const { userId } = req.body;
+  const { id } = req.user;
+
   const {fullName,phone,line1,line2,landmark,city,state,country,zipCode } = req.body;
 
   if (!fullName ||!phone ||!line1 ||!line2 ||!landmark ||!city ||!state ||!country ||!zipCode ) {
@@ -13,13 +14,14 @@ const addAddress = async (req, res) => {
   }
 
   try {
-    const data = await addAddressDB(userId, {fullName,phone,line1,line2,landmark,city,state,country,zipCode});
+    const data = await addAddressDB(id, {fullName,phone,line1,line2,landmark,city,state,country,zipCode});
     return res.status(201).json({
       success: true,
       message: "user add address successfully",
       data: data,
     });
   } catch (error) {
+        console.log(error,'error')
        return res.status(500).json({
          success: false,
          error: error.message,
@@ -29,8 +31,9 @@ const addAddress = async (req, res) => {
 
 
 const getAddress =async (req,res)=>{
+    const user=req.user.id;
     try {
-        const data=await getAddressDB();
+        const data=await getAddressDB(user);
         return res.status(200).json({
             success:true,
             message:"get address succfully",

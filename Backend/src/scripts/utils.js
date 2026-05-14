@@ -15,11 +15,13 @@ const generateToken=(data)=>{
 
 const generateSlug=(name)=>{
     return slugify(name,{
-        lower:true,  // convert into lower case
-        strict:true ,    // remove all characters
-        // replacement: "-", // default hi hai
-        // remove: /[*+~.()'"!:@&|]/g  // important
+        lower:true,
+        strict:true,
     });
 }
 
-module.exports={generateToken,generateSlug}
+const verifyToken=(token)=>{
+    return jwt.verify(token,process.env.JWT_SECRET);
+}
+
+module.exports={generateToken,generateSlug,verifyToken}

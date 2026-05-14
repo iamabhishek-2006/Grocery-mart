@@ -1,9 +1,9 @@
 const { placeOrderCODService, getUserOrderDetailsDB, placeOrderOnlineDB, getOrderDB, cancelOrderDB,   } = require("../../services/users/order.service");
 
-// place order Cash on Deliver COD : api/order/cod
+// order on cash on delivery
 
 const placeOrderbyCOD = async (req, res) => {
-  const {user}=req.body;
+  const user=req.user.id;
   const {  paymentMethod, totalAmount,shippingAddress, items } = req.body;
  
   try {
@@ -25,17 +25,17 @@ const placeOrderbyCOD = async (req, res) => {
 // get Order
 
 const getOrder=async(req,res)=>{
-  const data=await getOrderDB();
+  const user=req.user.id;
+  const data=await getOrderDB(user);
   return res.json({success:true,data:data
   });
 }
 
 const getUserOrderDetails = async (req, res) => {
-  const {user}=req.body;
+  const user=req.user.id;
   
   try {
     const data = await getUserOrderDetailsDB(user);
-    console.log(data,'data')
     return res.status(200).json({
       success: true,
       message: "order get successfully",
@@ -52,7 +52,8 @@ const getUserOrderDetails = async (req, res) => {
 
 // order api of Online payment or UPI
 const placeOrderbyOnline = async (req, res) => {
-  const {user}=req.body;
+  const user=req.user.id;
+  
   const {paymentMethod,totalAmount,paymentDetails,shippingAddress,items} = req.body;
 
   try {

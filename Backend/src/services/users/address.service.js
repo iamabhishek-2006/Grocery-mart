@@ -23,8 +23,8 @@ const addAddressDB = async (id, { fullName, phone, line1, line2, landmark, city,
   return await data.save();
 };
 
-const getAddressDB=async()=>{
-    return await Address.find();
+const getAddressDB=async(id)=>{
+    return await Address.find({userId:id});
 }
 
 const updateAddressDB=async(id,body)=>{

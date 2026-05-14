@@ -8,6 +8,6 @@ const router=express.Router();
 router.use("/category",categoryRoutes);
 router.use("/product",productRoutes);
 router.use("/user",UserRoutes);
-
+router.use("/order",require("./oders.routes"));
 
 module.exports=router;
