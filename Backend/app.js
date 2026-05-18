@@ -1,9 +1,10 @@
 const express=require("express");
 const connectDB=require("./src/config/dbconnection");
 const authRoutes=require("./src/routes/auth.routes");
-const adminRoutes=require("./src/routes/admin");
+const adminOnly=require("./src/routes/admin");
 const publicRoutes=require("./src/routes/public.routes");
 const userRoutes=require("./src/routes/users");
+const adminMiddleware=require("./src/middleware/admin.middleware")
 
 const cookieParser=require("cookie-parser");
 const authMiddleware = require("./src/middleware/auth.middleware");
@@ -26,7 +27,7 @@ app.use("/auth",authRoutes);
 
 app.use(authMiddleware);
 
-app.use("/admin",adminRoutes);
+app.use("/admin", adminMiddleware, adminOnly);
 
 app.use("/user",userRoutes);
 

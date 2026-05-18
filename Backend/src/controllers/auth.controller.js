@@ -1,5 +1,5 @@
 const { generateToken } = require("../scripts/utils");
-const { signUpDB, loginDB } = require("../services/user.service");
+const { signUpDB, loginDB } = require("../services/auth.service");
 
 const signUp = async (req, res) => {
   const { name, email, password } = req.body;
@@ -45,6 +45,13 @@ const login = async (req, res) => {
 
   try {
     const user = await loginDB({  email, password });
+
+    if(!user){
+      return res.status(400).json({
+        success:false,
+        error:"User not found"
+      })
+    }
 
     const {accessToken,refreshToken}=generateToken({
       id:user._id,

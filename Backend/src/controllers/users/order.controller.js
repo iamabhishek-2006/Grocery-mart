@@ -74,7 +74,6 @@ const placeOrderbyOnline = async (req, res) => {
 
 const cancelOrder=async(req,res)=>{
   const {id} = req.params;
-  console.log(id);
   try {
   const data=await cancelOrderDB(id);
   return res.status(200).json({

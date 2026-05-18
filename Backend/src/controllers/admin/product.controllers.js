@@ -8,7 +8,14 @@ const createProduct = async (req, res) => {
     return res.json({
       success: false,
       error: "all fields are required",
-      required:["title","description","mrp","stock","category","weight","image"]
+      required:["title","description","price","mrp","stock","category","weight","image"]
+    });
+  }
+
+  if(mrp>price){
+    return res.json({
+      success:false,
+      error:"mrp should be greater than price"
     });
   }
 
@@ -43,7 +50,7 @@ const getProduct=async(req,res)=>{
   if(!data){
     return res.json({
       success:false,
-      error:"sorry data not fetched"
+      error:"data not found"
     });
   }
   return res.status(200).json({
@@ -79,6 +86,12 @@ const updateProduct=async(req,res)=>{
       });
     } catch (error) {
       console.log(error);
+     if(error.code === 11000){
+      return res.status(409).json({
+        success:false,
+        error:"product already exists"
+      });
+     }
       return res.status(500).json({
         success: false,
         error: "something went wrong",

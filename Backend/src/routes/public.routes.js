@@ -1,11 +1,11 @@
 const express=require("express");
-const { getProduct } = require("../controllers/admin/product.controllers");
-const { getCategories } = require("../controllers/public.category");
-
+const { getProducts, getCategories, getProductsbySlug, getProductbyCategories } = require("../controllers/public.controller");
 
 const router=express.Router();
 
-router.get("/product",getProduct);
+router.get("/product",getProducts);
 router.get("/category",getCategories);
+router.get("/product/:slug",getProductsbySlug);
+router.get("/products/:category", getProductbyCategories);
 
 module.exports=router;
