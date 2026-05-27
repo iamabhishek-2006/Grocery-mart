@@ -8,15 +8,20 @@ const adminMiddleware=require("./src/middleware/admin.middleware")
 
 const cookieParser=require("cookie-parser");
 const authMiddleware = require("./src/middleware/auth.middleware");
+const morgan=require("morgan")
 
 require("dotenv").config()
 
 const app=express();
+
+const PORT = process.env.PORT || 5000;
+
 app.use(express.json());
+
+app.use(morgan("combined")); 
+
 app.use(cookieParser());
 connectDB();
-
-PORT=9000;
 
 app.get("/",(req,res)=>{
     res.send("hellow world");
