@@ -9,7 +9,7 @@ import { appStore } from '../store/app.store';
 
 const Sidebar = () => {
   return (
-    <div className="w-[200px] border-r border-gray-300 h-[calc(100vh-50px)] overflow-hidden bg-white">
+    <div className="w-50 border-r border-gray-300 h-[calc(100vh-50px)] overflow-hidden bg-white">
       <div className="flex flex-col gap-5 p-3">
         <SidebarLinks icon={Home} link="/" label="Home" />
         <SidebarLinks icon={List} link="/categories" label="Categories" />
