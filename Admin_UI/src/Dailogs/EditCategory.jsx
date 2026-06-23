@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import React, { useState } from "react";
 
-const EditCategory = ({ id, edit,name }) => {
+const EditCategory = ({category, id, edit,name }) => {
   const [open, setOpen] = useState(false);
 
   function close() {
@@ -16,7 +16,7 @@ const EditCategory = ({ id, edit,name }) => {
       >
         Edit
       </h1>
-      <Dailog open={open} close={close} id={id} edit={edit} name={name} />
+      <Dailog category={category} open={open} close={close} id={id} edit={edit} name={name} />
     </div>
   );
 };
@@ -38,7 +38,6 @@ const Dailog = ({ open, close ,id , edit, name}) => {
         body: JSON.stringify({name:editCategory}),
         });
       const data= await res.json();
-      console.log(data,'data');
       if(!data.success){
         alert(data.error || "something went wrong");
         return;

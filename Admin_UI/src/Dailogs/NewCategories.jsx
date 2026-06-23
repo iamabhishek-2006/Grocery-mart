@@ -59,7 +59,7 @@ const Dailog = ({ open, close ,add}) => {
         onSubmit={submitHandler}
         className=" bg-white w-120 p-5 mx-8   text-black relative rounded-lg "
       >
-        <h1 className="text-center text-2xl text-sky-700 font-serif">
+        <h1 className="text-center text-2xl text-black font-serif">
           Cateogires
         </h1>
 
@@ -74,8 +74,8 @@ const Dailog = ({ open, close ,add}) => {
             </label>
             <input
               value={categoryData}
-              onChange={(e)=>setCateogyData(e.target.value)}
-              className="border-2 border-gray-300 px-4 py-2 rounded-2xl focus:outline-none  focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setCateogyData(e.target.value)}
+              className="w-full border-2 border-gray-300 px-4 py-2 rounded-lg  focus:outline-none focus:border-black transition-all duration-200  placeholder:text-gray-400"
               type="text"
               placeholder="enter category name"
               required
@@ -86,14 +86,14 @@ const Dailog = ({ open, close ,add}) => {
             <button
               type="button"
               onClick={close}
-              className="w-full rounded-xl border border-gray-300 py-2 font-medium text-gray-700 transition hover:bg-gray-100"
+              className="flex-1 rounded-lg border border-gray-300 py-2 font-medium  transition hover:bg-gray-100 cursor-pointer"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-blue-500  font-medium text-white transition hover:bg-blue-600"
+              className="flex-1  rounded-lg bg-blue-500  font-medium text-white transition hover:bg-blue-600 cursor-pointer"
             >
               Add Category
             </button>

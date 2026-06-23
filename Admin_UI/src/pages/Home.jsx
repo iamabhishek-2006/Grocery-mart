@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 const Home = () => {
   return (
     <Layout>
-      <div>mfdskl</div>
+      <div>Dashboard</div>
     </Layout>
   );
 }

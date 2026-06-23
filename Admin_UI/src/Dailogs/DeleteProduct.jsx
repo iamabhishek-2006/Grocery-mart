@@ -1,26 +1,33 @@
 import { Trash, Trash2, X } from 'lucide-react';
 import React, { useState } from 'react'
 
-const DeleteCategory = ({deleteD, id}) => {
-const [open,setOpen]=useState(false);
+const DeleteProduct = ({ deleteD, id }) => {
 
-function close(){
-    setOpen(false)
-}
+  const [open, setOpen] = useState(false);
+
+  function close() {
+    setOpen(false);
+  }
+
   return (
     <div>
-      <Trash onClick={()=>setOpen(true)} className="text-red-600 cursor-pointer" />
+      <Trash
+        onClick={() => setOpen(true)}
+        className="text-red-600 cursor-pointer"
+      />
       <Dialog open={open} close={close} deleteD={deleteD} id={id} />
     </div>
   );
-}
+};
+
 
 const Dialog = ({ open, close, deleteD, id }) => {
-  const DeleteCategory = async (e) => {
+
+  const DeleteProduct = async (e) => {
     e.preventDefault();
     try {
       const url = import.meta.env.VITE_SERVER_URL;
-      const res = await fetch(`${url}/admin/category/${id}`, {
+      const res = await fetch(`${url}/admin/product/${id}`, {
         method: "DELETE",
         credentials: "include",
         headers: {
@@ -28,12 +35,15 @@ const Dialog = ({ open, close, deleteD, id }) => {
         },
       });
       const data = await res.json();
+
       if (!data.success) {
-        alert(data.error);
+        alert(data.error || "something went wrong");
         return;
       }
+
       deleteD(id);
       close();
+
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +60,7 @@ const Dialog = ({ open, close, deleteD, id }) => {
           onClick={close}
           className="absolute top-4 right-4 text-gray-500 hover:text-black"
         >
-          <X size={20} />
+          <X className='cursor-pointer' size={20} />
         </button>
 
         <h2 className="text-xl sm:text-2xl font-semibold text-center mt-2">
@@ -70,11 +80,11 @@ const Dialog = ({ open, close, deleteD, id }) => {
           </button>
 
           <button
-            onClick={DeleteCategory}
+            onClick={DeleteProduct}
             className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition cursor-pointer"
           >
             Delete
-          </button> 
+          </button>
         </div>
       </div>
     </div>
@@ -83,4 +93,4 @@ const Dialog = ({ open, close, deleteD, id }) => {
 
 
 
-export default DeleteCategory
+export default DeleteProduct;

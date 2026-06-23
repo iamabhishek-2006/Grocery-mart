@@ -93,13 +93,13 @@ const handleSubmit = async (e) => {
           />
 
           {showPassword ? (
-            <Eye
+            <EyeOff
               className="text-gray-500 cursor-pointer"
               onClick={() => setShowPassword(false)}
               size={20}
             />
           ) : (
-            <EyeOff
+            <Eye
               className="text-gray-500 cursor-pointer"
               onClick={() => setShowPassword(true)}
               size={20}

@@ -88,7 +88,7 @@ const Categories = () => {
                   <td className="px-4 py-3 border-b">{item.slug}</td>
                   <td>
                     <div className="flex  px-4 py-3  gap-2 border-b ">
-                      <EditCategory id={item._id} name={item.name} edit={updateCategory} />
+                      <EditCategory category={categories} id={item._id} name={item.name} edit={updateCategory} />
                       <DeleteCategory deleteD={deleteCategory} id={item._id} />
                     </div>
                   </td>
