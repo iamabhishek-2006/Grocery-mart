@@ -1,7 +1,7 @@
 const User = require("../../models/user");
 
 const getUsersbyAdminDB=async()=>{
-   const user=await User.find();
+   const user=await User.find().select("email name role ");
    return user;
 };
 

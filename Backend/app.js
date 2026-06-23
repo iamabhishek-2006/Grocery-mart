@@ -9,14 +9,17 @@ const adminMiddleware=require("./src/middleware/admin.middleware")
 const cookieParser=require("cookie-parser");
 const authMiddleware = require("./src/middleware/auth.middleware");
 const morgan=require("morgan")
+const cors= require("cors");
 
 require("dotenv").config()
 
 const app=express();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 9000;
 
 app.use(express.json());
+
+app.use(cors({  origin: "http://localhost:5173",  credentials: true,}));
 
 app.use(morgan("combined")); 
 

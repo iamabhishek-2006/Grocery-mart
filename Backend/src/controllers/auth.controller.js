@@ -63,8 +63,9 @@ const login = async (req, res) => {
     res.cookie("accessToken",accessToken,{
       httpOnly:true,
       secure:false,
-      sameSite:"lax"
-    })
+      sameSite:"lax",
+      maxAge: 24 * 60 * 60 * 1000  // valid 1 day
+    });
 
     return res.status(201).json({
       success: true,
@@ -81,4 +82,25 @@ const login = async (req, res) => {
   }
 };
 
-module.exports={signUp,login};
+const logout=async(req,res)=>{
+    try {
+    res.clearCookie("token",{
+      httpOnly:"true",
+      sucure:false,
+      sameSite:"lax"
+    });
+
+    res.json({
+      success:true,
+      message:"Logout successfully",
+
+    })
+    } catch (error) {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+        });
+    }
+}
+
+module.exports={signUp,login,logout};

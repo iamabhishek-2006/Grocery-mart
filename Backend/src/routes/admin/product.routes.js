@@ -3,8 +3,8 @@ const { createProduct, updateProduct, deleteProduct, getProduct } = require("../
 
 const router=express.Router();
 
-router.post("/",createProduct);
-router.get("/get",getProduct);
+router.post("/add",createProduct);
+router.get("/",getProduct);
 router.put("/:id",updateProduct);
 router.delete("/:id",deleteProduct);
 

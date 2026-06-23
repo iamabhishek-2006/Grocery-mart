@@ -3,19 +3,19 @@ const { createProductDB, updateProductDB, deleteProductDB, getProductDB } = requ
 
 const createProduct = async (req, res) => {
   const body = req.body;
+  const { title, description, price, mrp, stock, category, weight, image } =body;
 
   if (!body) {
     return res.json({
       success: false,
       error: "all fields are required",
-      required:["title","description","price","mrp","stock","category","weight","image"]
     });
   }
 
-  if(mrp>price){
+  if (mrp < price) {
     return res.json({
-      success:false,
-      error:"mrp should be greater than price"
+      success: false,
+      error: "MRP should be greater than price",
     });
   }
 
@@ -28,6 +28,7 @@ const createProduct = async (req, res) => {
       message: "product added successfully",
       data: data,
     });
+
   } catch (error) {
     console.log(error);
     if (error.code === 11000) {

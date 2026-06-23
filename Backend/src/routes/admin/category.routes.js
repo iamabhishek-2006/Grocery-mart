@@ -3,8 +3,8 @@ const { createCategory, updateCategory, deleteCategory, getCategory } = require(
 
 const router=express.Router();
 
-router.post("/",createCategory);
-router.get("/get",getCategory);
+router.post("/add",createCategory);
+router.get("/",getCategory);
 router.put("/:id",updateCategory);
 router.delete("/:id",deleteCategory);
 
