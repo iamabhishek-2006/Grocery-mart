@@ -18,7 +18,8 @@ const Sidebar = () => {
         <SidebarLinks icon={Home} link="/" label="Dashboard" />
         <SidebarLinks icon={List} link="/categories" label="Categories" />
         <SidebarLinks icon={Package} link="/products" label="Products" />
-        <SidebarLinks icon={Blocks} link="/orders" label="Orders" />
+        <SidebarLinks icon={Blocks} link="/orders" label="Orders-I" />
+        <SidebarLinks icon={Blocks} link="/codOrders" label="Orders-II"/>
         <SidebarLinks icon={User} link="/users" label="Users" />
       </div>
     </aside>

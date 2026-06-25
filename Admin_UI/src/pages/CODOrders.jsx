@@ -1,79 +1,75 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 
-const Orders = () => {
-  const [orders, setOrders] = useState([]);
-
-  const handleChangeStatus=async(id,status)=>{
-    try {
-    const url=import.meta.env.VITE_SERVER_URL;
-    const res = await fetch(`${url}/admin/order/${id}`, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({orderStatus: status}),
-    });
-    const data=await res.json();
-    if(!data.success){
-      alert(data.error || "something went wrong");
-      return;
-    }
-    setOrders((prev)=>prev.map((item)=>{
-      if(item._id === id){
-        return {...item,orderStatus:status}
-      }
-      return item;
-    }));
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getOrders = async () => {
-    try {
-      const url = import.meta.env.VITE_SERVER_URL;
-      const res = await fetch(`${url}/admin/order`, {
-        method:"GET",
+const CODOrders = () => {
+    const [orders, setOrders] = useState([]);
+  
+    const handleChangeStatus=async(id,status)=>{
+      try {
+      const url=import.meta.env.VITE_SERVER_URL;
+      const res = await fetch(`${url}/admin/order/${id}`, {
+        method: "PUT",
         credentials: "include",
-        headers:{
-          "Content-Type":"application/json"
-        }
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({orderStatus: status}),
       });
-      const data = await res.json();
-      setOrders(data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getOrders();
-  }, []);
-
-  // const codOrders = orders.filter((item) => item.paymentMethod === "COD");
-
-  const onlineOrders = orders.filter((item) => item.paymentMethod === "Online");
-
-  const changeOrderClass=(status)=>{
-      switch (status) {
-        case "processing":
-          return "bg-gray-500 text-white";
-        case "shipped":
-          return "bg-blue-400 text-black";
-        case "delivered":
-          return "bg-green-400 text-green-00";
-        case "cancelled":
-          return "bg-red-500 text-white";
-        default:
-          return "bg-gray-200 text-gray-500";
+      const data=await res.json();
+      if(!data.success){
+        alert(data.error || "something went wrong");
+        return;
       }
-  };
+      setOrders((prev)=>prev.map((item)=>{
+        if(item._id === id){
+          return {...item,orderStatus:status}
+        }
+        return item;
+      }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
+    const getOrders = async () => {
+      try {
+        const url = import.meta.env.VITE_SERVER_URL;
+        const res = await fetch(`${url}/admin/order`, {
+          method:"GET",
+          credentials: "include",
+          headers:{
+            "Content-Type":"application/json"
+          }
+        });
+        const data = await res.json();
+        setOrders(data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    useEffect(() => {
+      getOrders();
+    }, []);
+  
+    const codOrders = orders.filter((item) => item.paymentMethod === "COD");
 
+      const changeOrderClass = (status) => {
+        switch (status) {
+          case "processing":
+            return "bg-gray-500 text-white";
+          case "shipped":
+            return "bg-blue-400 text-black";
+          case "delivered":
+            return "bg-green-400 text-green-00";
+          case "cancelled":
+            return "bg-red-500 text-white";
+          default:
+            return "bg-gray-200 text-gray-500";
+        }
+      };
+  
   return (
-    // <Layout>
-
     <Layout>
       <div className="p-5">
         {/* Header */}
@@ -89,7 +85,7 @@ const Orders = () => {
         </div>
 
         {/* Desktop Table */}
-      
+
         <div className="hidden sm:block">
           <div className="w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm h-110">
             <table className="min-w-225 w-full bg-white border-collapse">
@@ -118,7 +114,7 @@ const Orders = () => {
               </thead>
 
               <tbody>
-                {onlineOrders.map((order) => (
+                {codOrders.map((order) => (
                   <tr
                     key={order._id}
                     className="hover:bg-gray-50 transition-colors"
@@ -178,4 +174,4 @@ const Orders = () => {
   );
 }
 
-export default Orders
+export default CODOrders

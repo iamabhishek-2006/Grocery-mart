@@ -6,12 +6,11 @@ import NewProducts from "../Dailogs/NewProducts";
 import { Search } from "lucide-react";
 import DeleteProduct from "../Dailogs/DeleteProduct";
 import EditProduct from "../Dailogs/EditProduct";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [products, setProducts] = React.useState([]);
- 
   const [categories, setCategories] = React.useState([]);
-  console.log(categories);
 
   const addProduct = (newdata) => {
     setProducts([
@@ -35,7 +34,6 @@ const Products = () => {
             category: categories.find((c) => c._id === newproduct.category),
           };
         }
-
         return item;
       }),
     );
@@ -86,7 +84,7 @@ const Products = () => {
     <Layout>
       <div className="p-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 ">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">All Products</h1>
             <p className="text-sm text-gray-500">
@@ -96,7 +94,7 @@ const Products = () => {
 
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             {/* Search */}
-            <div className="relative">
+            <div className="relative hidden sm:block">
               <Search
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -105,7 +103,7 @@ const Products = () => {
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                className="w-full sm:w-72 pl-10 pr-4 py-2 bg-white border  border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               />
             </div>
 
@@ -150,7 +148,7 @@ const Products = () => {
                   <td className="px-5 py-4">
                     <div>
                       <h2 className="font-medium text-gray-900 line-clamp-1">
-                        {item?.title}
+                        <Link to={`/product/${item.slug}`} >{item?.title}</Link>
                       </h2>
                     </div>
                   </td>
