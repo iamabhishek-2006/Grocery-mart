@@ -23,4 +23,9 @@ const getProductDB=async()=>{
   return productsData;
 }
 
-module.exports={createProductDB,updateProductDB,deleteProductDB,getProductDB};
+const getProductbySlugDB=async({slug})=>{
+  const getProduct=await Product.findOne({slug}).populate("category");
+  return getProduct;
+}
+
+module.exports={createProductDB,updateProductDB,deleteProductDB,getProductDB,getProductbySlugDB};

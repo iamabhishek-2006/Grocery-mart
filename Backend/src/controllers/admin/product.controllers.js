@@ -1,5 +1,5 @@
 const { generateSlug } = require("../../scripts/utils");
-const { createProductDB, updateProductDB, deleteProductDB, getProductDB } = require("../../services/admin/product.service");
+const { createProductDB, updateProductDB, deleteProductDB, getProductDB, getProductbySlugDB } = require("../../services/admin/product.service");
 
 const createProduct = async (req, res) => {
   const body = req.body;
@@ -117,5 +117,17 @@ const deleteProduct=async(req,res)=>{
     }
 }
 
+const getProductbySlug=async(req,res)=>{
+  const {slug}=req.params;
+  try {
+    const data = await getProductbySlugDB({ slug });
+    return res.status(200).json({ success: true, data: data });
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+}
 
-module.exports = { createProduct ,updateProduct,deleteProduct,getProduct};
+module.exports = { createProduct ,updateProduct,deleteProduct,getProduct,getProductbySlug};

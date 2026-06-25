@@ -1,7 +1,7 @@
 const express=require("express");
 const connectDB=require("./src/config/dbconnection");
 const authRoutes=require("./src/routes/auth.routes");
-const adminOnly=require("./src/routes/admin");
+const adminRoutes=require("./src/routes/admin");
 const publicRoutes=require("./src/routes/public.routes");
 const userRoutes=require("./src/routes/users");
 const adminMiddleware=require("./src/middleware/admin.middleware")
@@ -35,7 +35,7 @@ app.use("/auth",authRoutes);
 
 app.use(authMiddleware);
 
-app.use("/admin", adminMiddleware, adminOnly);
+app.use("/admin", adminMiddleware, adminRoutes);
 
 app.use("/user",userRoutes);
 
