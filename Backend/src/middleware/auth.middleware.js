@@ -1,4 +1,4 @@
-const { verifyToken } = require("../scripts/utils");
+const { verifyToken } = require("../utils/scripts");
 
 module.exports = (req, res, next) => {
   try {

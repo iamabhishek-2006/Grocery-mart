@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express=require("express");
 const connectDB=require("./src/config/dbconnection");
 const authRoutes=require("./src/routes/auth.routes");
@@ -11,7 +12,6 @@ const authMiddleware = require("./src/middleware/auth.middleware");
 const morgan=require("morgan")
 const cors= require("cors");
 
-require("dotenv").config()
 
 const app=express();
 

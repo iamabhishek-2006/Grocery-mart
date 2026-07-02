@@ -2,6 +2,7 @@ const Category = require("../../models/category");
 
 const createCategoryDB=async({name,slug})=>{
     const category= await Category.create({name,slug});
+    console.log(category,'this is category');
     return category;
 }
 

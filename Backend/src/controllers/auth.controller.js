@@ -1,5 +1,5 @@
-const { generateToken } = require("../scripts/utils");
 const { signUpDB, loginDB } = require("../services/auth.service");
+const { generateToken } = require("../utils/scripts");
 
 const signUp = async (req, res) => {
   const { name, email, password } = req.body;

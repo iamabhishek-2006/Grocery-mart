@@ -1,4 +1,4 @@
-const { generateSlug } = require("../../scripts/utils");
+const { generateSlug } = require("../../utils/scripts");
 const {
   createCategoryDB,
   updateCategoryDB,
