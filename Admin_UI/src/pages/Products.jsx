@@ -112,7 +112,7 @@ const Products = () => {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm h-110">
+        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm h-100">
           <table className="min-w-full">
             <thead className="bg-gray-50 sticky top-0 z-10">
               <tr>

@@ -28,7 +28,7 @@ const Dailog = ({ open, close ,add}) => {
     e.preventDefault();
     try {
     const url=import.meta.env.VITE_SERVER_URL;
-    const res=await fetch(`${url}/admin/category`,{
+    const res=await fetch(`${url}/admin/category/add`,{
         method: "POST",
         credentials: "include",
         headers: {

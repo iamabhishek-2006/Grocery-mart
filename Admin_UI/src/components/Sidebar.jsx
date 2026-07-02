@@ -1,4 +1,4 @@
-import { Package, Blocks, List, User, Home } from "lucide-react";
+import { Package, Blocks, List, User, Home ,CreditCard,Wallet,} from "lucide-react";
 import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { appStore } from "../store/app.store";
@@ -18,8 +18,9 @@ const Sidebar = () => {
         <SidebarLinks icon={Home} link="/" label="Dashboard" />
         <SidebarLinks icon={List} link="/categories" label="Categories" />
         <SidebarLinks icon={Package} link="/products" label="Products" />
-        <SidebarLinks icon={Blocks} link="/orders" label="Orders-I" />
-        <SidebarLinks icon={Blocks} link="/codOrders" label="Orders-II"/>
+        <SidebarLinks icon={CreditCard} link="/orders" label="Prepaid Orders" />
+
+        <SidebarLinks icon={Wallet} link="/codOrders" label="COD Orders" />
         <SidebarLinks icon={User} link="/users" label="Users" />
       </div>
     </aside>
