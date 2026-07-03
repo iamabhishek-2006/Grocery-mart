@@ -1,5 +1,6 @@
 const jwt=require("jsonwebtoken");
 const slugify=require("slugify");
+const bcrypt=require("bcrypt")
 
 const generateToken=(data)=>{
     const accessToken = jwt.sign(data,process.env.JWT_SECRET,{
@@ -24,4 +25,12 @@ const verifyToken=(token)=>{
     return jwt.verify(token,process.env.JWT_SECRET);
 }
 
-module.exports={generateToken,generateSlug,verifyToken}
+const hashPassword=(password)=>{
+    return bcrypt.hash(password,12);
+}
+
+const verifyPassword=(password,hashPassword)=>{
+    return bcrypt.compare(password,hashPassword);
+}
+
+module.exports = { generateToken, generateSlug, verifyToken, hashPassword ,verifyPassword };

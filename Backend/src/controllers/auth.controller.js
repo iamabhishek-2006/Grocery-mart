@@ -1,5 +1,5 @@
 const { signUpDB, loginDB } = require("../services/auth.service");
-const { generateToken } = require("../utils/scripts");
+const { generateToken, hashPassword, verifyPassword } = require("../utils/scripts");
 
 const signUp = async (req, res) => {
   const { name, email, password } = req.body;
@@ -12,13 +12,21 @@ const signUp = async (req, res) => {
   }
 
   try {
-    const data = await signUpDB({ name, email, password });
+    // hash password
+    const hashPswd=await hashPassword(password)
+    console.log(hashPswd);
+    const data = await signUpDB({ name, email, password:hashPswd });
+    console.log(data);
+    data.password = undefined;
+    data.__v = undefined;
+
     return res.status(201).json({
       success: true,
       message: "signup successfully",
       data: data,
     });
   } catch (error) {
+    console.log(error);
     if (error.code === 11000) {
       return res.status(409).json({
         success: false,
@@ -44,6 +52,7 @@ const login = async (req, res) => {
   }
 
   try {
+   
     const user = await loginDB({  email, password });
 
     if(!user){
@@ -52,6 +61,18 @@ const login = async (req, res) => {
         error:"User not found"
       })
     }
+
+    // check password
+    const isValid=await verifyPassword(password,user.password);
+  
+    if(!isValid){
+      return res.json({
+        success:false,
+        error:"wrong password"
+      })
+    }
+
+    user.password=undefined;
 
     const {accessToken,refreshToken}=generateToken({
       id:user._id,
