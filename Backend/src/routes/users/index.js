@@ -8,5 +8,4 @@ router.use("/cart",cartRoutes);
 router.use("/address", authMiddleware, require("./address.routes"));
 router.use("/order",authMiddleware,require("./order.routes"));
 
-
 module.exports=router;

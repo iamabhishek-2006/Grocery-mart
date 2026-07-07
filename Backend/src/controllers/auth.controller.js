@@ -105,15 +105,15 @@ const login = async (req, res) => {
 
 const logout=async(req,res)=>{
     try {
-    res.clearCookie("token",{
-      httpOnly:"true",
+    res.clearCookie("accessToken",{
+      httpOnly:true,
       sucure:false,
       sameSite:"lax"
     });
 
     res.json({
       success:true,
-      message:"Logout successfully",
+      message:"admin Logout successfully",
 
     })
     } catch (error) {

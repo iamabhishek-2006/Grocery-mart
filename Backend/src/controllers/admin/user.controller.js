@@ -1,7 +1,21 @@
-const {
-  getUsersbyAdminDB,
-  deleteUsersbyAdminDB,
-} = require("../../services/admin/user.service");
+const {getUsersbyAdminDB,deleteUsersbyAdminDB,profiileAdminDB} = require("../../services/admin/user.service");
+
+const getprofileAdmin = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const data = await profiileAdminDB(id);
+    return res.json({
+      success: true,
+      message:"admin details fetch successfully",
+      data:data,
+    });
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 const getUsersbyAdmin = async (req, res) => {
   try {
@@ -45,4 +59,4 @@ const deleteUsersbyAdmin = async (req, res) => {
   }
 };
 
-module.exports = { getUsersbyAdmin, deleteUsersbyAdmin };
+module.exports = { getUsersbyAdmin, deleteUsersbyAdmin, getprofileAdmin };
