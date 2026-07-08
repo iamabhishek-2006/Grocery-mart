@@ -5,6 +5,7 @@ import { Trash } from "lucide-react";
 import NewCategories from "../Dailogs/NewCategories";
 import DeleteCategory from "../Dailogs/DeleteCategory";
 import EditCategory from "../Dailogs/EditCategory";
+import withAuth from "../components/withAuth";
 
 const Categories = () => {
   const [categories, setCateogires] = useState([]);
@@ -102,4 +103,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default withAuth(Categories);

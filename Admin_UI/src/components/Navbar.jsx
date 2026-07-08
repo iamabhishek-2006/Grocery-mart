@@ -2,22 +2,11 @@ import { PanelRightClose, PanelRightOpen, ShieldUser } from "lucide-react";
 import { UserRoundPlus } from "lucide-react";
 import React, { useContext } from "react";
 import { appStore } from "../store/app.store";
+import { authStore } from "../store/auth.store";
 
 const Navbar = () => {
   const { sidebar, closeSidebar, openSidebar } = useContext(appStore);
-
-  const handleLogout = async () => {
-    try {
-      const url=import.meta.env.VITE_SERVER_URL;
-      await fetch(`${url}/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
-      window.location.href = "/login";
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { handleLogout } = useContext(authStore);
 
   return (
     <div className=" bg-white border-b border-gray-300 flex justify-between items-center p-5  select-none h-12.5  ">

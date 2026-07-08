@@ -1,51 +1,55 @@
 import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import withAuth from "../components/withAuth";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [input,setInput]=useState({
-    email:"",
-    password:""
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
   });
+  const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleChange=(e)=>{
-    const eleName=e.target.name;
-    const eleValue=e.target.value
-    setInput({...input , [eleName]: eleValue });
-  }
+  const handleChange = (e) => {
+    const eleName = e.target.name;
+    const eleValue = e.target.value;
+    setInput({ ...input, [eleName]: eleValue });
+  };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const startTime = Date.now();
-    const url=import.meta.env.VITE_SERVER_URL;
+    try {
+      const url = import.meta.env.VITE_SERVER_URL;
+      const res = await fetch(`${url}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(input),
+      });
 
-    const res = await fetch(`${url}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(input),
-    });
+      const data = await res.json();
+      if (!data.success) {
+        setIsSuccess(false);
+        setMessage(data.error || data.message || "Something went wrong");
+      }
 
-    const data = await res.json();
-    console.log(data);
-    const endTime = Date.now();
+      if (data.success) {
+        setIsSuccess(true);
+        setMessage(data.message || "Login Successful!");
 
-    const totalTime = endTime - startTime;
-
-    console.log(`API Response Time: ${totalTime} ms`);
-
-    if (data.success) {
-      console.log("Login Success");
-      window.location.href = "/";
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
+      }
+    } catch (error) {
+      setIsSuccess(false);
+      setMessage("Server error. Please try again later.");
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen  flex items-center justify-center ">
@@ -64,7 +68,13 @@ const handleSubmit = async (e) => {
           </div>
         </div>
 
-        {/* <div className="bg-red-100 border border-red-300 text-red-600 text-center py-3 rounded-md mb-5">  </div> */}
+        {message && (
+          <div
+            className={`border text-center py-2 px-4 rounded-md text-sm font-medium mb-2 ${isSuccess ? "bg-green-100 border-green-300 text-green-700" : "bg-red-100 border-red-300 text-red-600"}`}
+          >
+            {message}
+          </div>
+        )}
 
         <div className="flex items-center border rounded-md px-3 py-2 mb-5">
           <Mail className="text-gray-500 mr-2" size={20} />

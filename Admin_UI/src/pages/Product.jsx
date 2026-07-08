@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
 import ImageContainer from "../components/ImageContainer";
 import { LoaderCircle, X } from "lucide-react";
+import withAuth from "../components/withAuth";
 
 const Product = () => {
   const { slug } = useParams();
@@ -152,4 +153,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default withAuth(Product);

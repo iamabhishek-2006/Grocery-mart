@@ -1,5 +1,6 @@
 import React from 'react'
 import Layout from '../components/Layout'
+import withAuth from '../components/withAuth';
 
 const Home = () => {
   return (
@@ -9,4 +10,4 @@ const Home = () => {
   );
 }
 
-export default Home
+export default withAuth(Home);

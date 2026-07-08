@@ -7,6 +7,9 @@ import { Search } from "lucide-react";
 import DeleteProduct from "../Dailogs/DeleteProduct";
 import EditProduct from "../Dailogs/EditProduct";
 import { Link } from "react-router-dom";
+import { ExternalLink } from "lucide-react";
+import withAuth from "../components/withAuth";
+
 
 const Products = () => {
   const [products, setProducts] = React.useState([]);
@@ -141,23 +144,30 @@ const Products = () => {
             <tbody>
               {products.map((item) => (
                 <tr
-                key={item._id}
-                className="border-t hover:bg-gray-50 transition"
+                  key={item._id}
+                  className="border-t hover:bg-gray-50 transition"
                 >
                   {/* Product */}
-                  <td className="px-5 py-4">
+                  {/* <td className="px-5 py-4">
                     <div>
                       <h2 className="font-medium text-gray-900 line-clamp-1">
                         <Link to={`/product/${item.slug}`} >{item?.title}</Link>
                       </h2>
                     </div>
+                  </td> */}
+                  <td className="px-5 py-4">
+                    <Link
+                      to={`/product/${item.slug}`}
+                      className="inline-flex items-center gap-1  hover:text-blue-800 hover:underline transition-colors"
+                    >
+                      <span>{item.title}</span>
+                      <ExternalLink size={14} />
+                    </Link>
                   </td>
-
                   {/* Category */}
                   <td className="px-5 py-4 text-gray-600">
                     {item.category?.name || "-"}
                   </td>
-
                   {/* Stock */}
                   <td className="px-5 py-4">
                     <span
@@ -170,7 +180,6 @@ const Products = () => {
                       {item.stock} Items
                     </span>
                   </td>
-
                   {/* Price */}
                   <td className="px-5 py-4">
                     <div className="flex items-end ">
@@ -183,11 +192,15 @@ const Products = () => {
                       </span>
                     </div>
                   </td>
-
                   {/* Actions */}
                   <td className="px-5 py-4">
                     <div className="flex justify-center gap-2">
-                      <EditProduct update={updateProduct} item={item} categories={categories} id={item._id} />
+                      <EditProduct
+                        update={updateProduct}
+                        item={item}
+                        categories={categories}
+                        id={item._id}
+                      />
                       <DeleteProduct deleteD={deleteProduct} id={item._id} />
                     </div>
                   </td>
@@ -212,4 +225,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default withAuth(Products);

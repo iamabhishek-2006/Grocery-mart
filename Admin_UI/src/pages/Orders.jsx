@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
+import withAuth from '../components/withAuth';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -143,13 +144,13 @@ const Orders = () => {
 
                     <td className="px-5 py-4 border-b text-sm">
                       <div className="flex flex-col">
-                        <span className="font-medium text-gray-800">
+                        {/* <span className="font-medium text-gray-800">
                           {order.user.name}
                         </span>
 
                         <span className="text-xs text-gray-500 break-all">
                           {order.user.email}
-                        </span>
+                        </span> */}
                       </div>
                     </td>
 
@@ -178,4 +179,4 @@ const Orders = () => {
   );
 }
 
-export default Orders
+export default withAuth(Orders);

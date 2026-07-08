@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import withAuth from "../components/withAuth";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -121,4 +122,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default withAuth(Users);

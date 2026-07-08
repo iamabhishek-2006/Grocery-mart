@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
+import withAuth from '../components/withAuth';
 
 const CODOrders = () => {
     const [orders, setOrders] = useState([]);
-  
+    console.log(orders);
     const handleChangeStatus=async(id,status)=>{
       try {
       const url=import.meta.env.VITE_SERVER_URL;
@@ -139,13 +140,13 @@ const CODOrders = () => {
 
                     <td className="px-5 py-4 border-b text-sm">
                       <div className="flex flex-col">
-                        <span className="font-medium text-gray-800">
-                          {order.user.name}
+                         {/* <span className="font-medium text-gray-800">
+                          {order?.user.name || "-"}
                         </span>
 
                         <span className="text-xs text-gray-500 break-all">
-                          {order.user.email}
-                        </span>
+                          {order?.user.email || "-"}
+                        </span> */}
                       </div>
                     </td>
 
@@ -174,4 +175,4 @@ const CODOrders = () => {
   );
 }
 
-export default CODOrders
+export default withAuth(CODOrders);
