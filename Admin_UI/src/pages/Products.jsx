@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import EditCategory from "../Dailogs/EditCategory";
 import DeleteCategory from "../Dailogs/DeleteCategory";
@@ -14,6 +14,7 @@ import withAuth from "../components/withAuth";
 const Products = () => {
   const [products, setProducts] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
+  const [loading,setLoading]=useState(false);
 
   const addProduct = (newdata) => {
     setProducts([
@@ -85,11 +86,11 @@ const Products = () => {
 
   return (
     <Layout>
-      <div className="p-6">
+      <div className="p-5">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 ">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">All Products</h1>
+            <h1 className="font-semibold text-xl">All Products</h1>
             <p className="text-sm text-gray-500">
               Manage all products from here
             </p>
@@ -97,7 +98,7 @@ const Products = () => {
 
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             {/* Search */}
-            <div className="relative hidden sm:block">
+            <div className="relative ">
               <Search
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"

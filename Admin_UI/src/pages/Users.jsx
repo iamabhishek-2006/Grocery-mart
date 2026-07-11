@@ -4,11 +4,13 @@ import withAuth from "../components/withAuth";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  const [admin,setAdmin]=useState([])
+  const [admin, setAdmin] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function Users() {
     const url = import.meta.env.VITE_SERVER_URL;
     try {
+      setLoading(true);
       const res = await fetch(`${url}/admin/user`, {
         method: "GET",
         credentials: "include",
@@ -18,14 +20,16 @@ const Users = () => {
       });
       const data = await res.json();
 
-      if(!data.success){
+      if (!data.success) {
         alert(data.error || "failed to fetch users");
         return;
       }
       setAdmin(data.data.filter((admin) => admin.role === "admin"));
-      setUsers(data.data.filter((user)=>user.role === "user"));
+      setUsers(data.data.filter((user) => user.role === "user"));
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -33,91 +37,95 @@ const Users = () => {
     Users();
   }, []);
 
-
   return (
     <Layout>
-      {/* admin table */}
+      {loading ? (
+        <div className="flex justify-center items-center h-[80vh]">
+          <h1 className="font-medium">Loading...</h1>
+        </div>
+      ) : (
+        <>
+          <div className="p-2 overflow-x-hidden">
+            <div className="flex flex-col  sm:flex-row items-center justify-between gap-4 mb-5">
+              <h1 className="font-semibold text-xl">Admin</h1>
+              <div className="flex gap-4">
+                <input
+                  className="bg-white hidden sm:block  pr-11 h-10 pl-3 py-2  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-200 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
+                  placeholder="Search for Users..."
+                />
+              </div>
+            </div>
 
-      <div className="p-2 overflow-x-hidden">
-        <div className="flex flex-col  sm:flex-row items-center justify-between gap-4 mb-5">
-          <h1 className="font-semibold text-xl">Admin</h1>
-          <div className="flex gap-4">
-            <input
-              className="bg-white hidden sm:block  pr-11 h-10 pl-3 py-2  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-200 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
-              placeholder="Search for Users..."
-            />
+            {/* Responsive Table */}
+
+            <div className="overflow-x-auto border border-gray-400 rounded-lg   ">
+              <table className="min-w-full bg-white">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
+                      Name
+                    </th>
+
+                    <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
+                      Email
+                    </th>
+                    <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
+                      Role
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {admin.map((data) => (
+                    <tr className=" hover:bg-gray-50" key={data._id}>
+                      <td className="px-4 py-3 ">{data.name}</td>
+                      <td className="px-4 py-3 ">{data.email}</td>
+                      <td className="px-4 py-3">{data.role}✅</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
 
-        {/* Responsive Table */}
+          <div className="p-2">
+            <div className="flex flex-col  sm:flex-row items-center justify-between gap-4 mb-5">
+              <h1 className="font-semibold text-xl">Users</h1>
+            </div>
 
-        <div className="overflow-x-auto border border-gray-400 rounded-lg   ">
-          <table className="min-w-full bg-white">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
-                  Name
-                </th>
+            {/* Responsive Table */}
 
-                <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
-                  Email
-                </th>
-                <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
-                  Role
-                </th>
-              </tr>
-            </thead>
+            <div className="overflow-hidden border border-gray-400 rounded-lg max-h-110  ">
+              <table className="min-w-full bg-white">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
+                      Name
+                    </th>
 
-            <tbody>
-              {admin.map((data) => (
-                <tr className=" hover:bg-gray-50" key={data._id}>
-                  <td className="px-4 py-3 ">{data.name}</td>
-                  <td className="px-4 py-3 ">{data.email}</td>
-                  <td className="px-4 py-3">{data.role}✅</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                    <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
+                      Email
+                    </th>
+                    <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
+                      Role
+                    </th>
+                  </tr>
+                </thead>
 
-      <div className="p-2">
-        <div className="flex flex-col  sm:flex-row items-center justify-between gap-4 mb-5">
-          <h1 className="font-semibold text-xl">Users</h1>
-        
-        </div>
-
-        {/* Responsive Table */}
-
-        <div className="overflow-hidden border border-gray-400 rounded-lg max-h-110  ">
-          <table className="min-w-full bg-white">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
-                  Name
-                </th>
-
-                <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
-                  Email
-                </th>
-                <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
-                  Role
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {users.map((data) => (
-                <tr className=" hover:bg-gray-50" key={data._id}>
-                  <td className="px-4 py-3 border-b">{data.name}</td>
-                  <td className="px-4 py-3 border-b">{data.email}</td>
-                  <td className="px-4 py-3 border-b">{data.role}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                <tbody>
+                  {users.map((data) => (
+                    <tr className=" hover:bg-gray-50" key={data._id}>
+                      <td className="px-4 py-3 border-b">{data.name}</td>
+                      <td className="px-4 py-3 border-b">{data.email}</td>
+                      <td className="px-4 py-3 border-b">{data.role}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
     </Layout>
   );
 };

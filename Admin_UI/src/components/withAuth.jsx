@@ -1,22 +1,16 @@
 import {useNavigate} from "react-router-dom"
 import { useContext, useEffect } from "react";
 import { authStore } from "../store/auth.store";
-import { useAuth } from "../hooks/useAuth";
 
 const withAuth=(WrapperComponent)=>(prop)=>{
-    const {user,loading}=useAuth();
-
-    console.log("withAuth user:", user);
-    console.log("withAuth loading:", loading);
-
+    const {user,loading}=useContext(authStore);
     const navigate=useNavigate();
 
     useEffect(()=>{
         if(!user && !loading){
-            console.log("check the code")
             navigate("/login", { replace: true });
         }
-    },[loading,user]);
+    },[loading,user,navigate]);
 
     if (loading) {
       return <Loading />;

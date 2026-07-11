@@ -87,7 +87,7 @@ const CODOrders = () => {
 
         {/* Desktop Table */}
 
-        <div className="hidden sm:block">
+        <div className="">
           <div className="w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm h-110">
             <table className="min-w-225 w-full bg-white border-collapse">
               <thead className="bg-gray-100">
