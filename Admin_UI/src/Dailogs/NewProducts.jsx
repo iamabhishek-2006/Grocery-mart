@@ -12,7 +12,7 @@ const NewProducts = ({add, categories }) => {
     <div >
       <button
         onClick={() => setOpen(true)}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg cursor-pointer"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-lg cursor-pointer"
       >
         NewProducts
       </button>
@@ -66,10 +66,10 @@ const Dailog = ({ open, close ,categories ,add}) => {
 
   return (
     <div
-      className={`${open ? "flex" : "hidden"} fixed inset-0 bg-gray-500/50 z-50 justify-center items-center min-h-screen w-full`}
+      className={`${open ? "flex" : "hidden"} fixed inset-0 bg-gray-500/50 z-50 justify-center items-center min-h-screen w-full p-4`}
     >
       {/* headings */}
-      <div className="bg-white p-4 space-y-2 rounded-xs ">
+      <div className="bg-white p-4 space-y-2 rounded-xl ">
         <div className="flex justify-between ">
           <h1 className="font-semibold">New Products</h1>
           <X className="cursor-pointer" onClick={close} />

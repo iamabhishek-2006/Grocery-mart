@@ -72,9 +72,9 @@ const Categories = () => {
         </div>
         {/* Responsive Table */}
         {categories.length !== 0 && (
-          <div className="overflow-x-auto border border-gray-400 rounded-lg max-h-110  ">
-            <table className="min-w-full bg-white">
-              <thead className="bg-gray-100">
+          <div className="overflow-x-auto border border-gray-400 rounded-lg max-h-100  ">
+            <table className="min-w-full bg-white border-collapse">
+              <thead className="bg-gray-100 sticky top-0 z-10">
                 <tr>
                   <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
                     Category Name

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import withAuth from '../components/withAuth';
+import { LoaderCircle } from 'lucide-react';
 
-const Orders = () => {
+const OnlineOrders = () => {
   const [orders, setOrders] = useState([]);
-
+  const [loading,setLoading]=useState(false);
   const handleChangeStatus=async(id,status)=>{
     try {
     const url=import.meta.env.VITE_SERVER_URL;
@@ -34,6 +35,7 @@ const Orders = () => {
 
   const getOrders = async () => {
     try {
+      setLoading(true);
       const url = import.meta.env.VITE_SERVER_URL;
       const res = await fetch(`${url}/admin/order`, {
         method:"GET",
@@ -46,6 +48,8 @@ const Orders = () => {
       setOrders(data.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -53,9 +57,8 @@ const Orders = () => {
     getOrders();
   }, []);
 
-  // const codOrders = orders.filter((item) => item.paymentMethod === "COD");
-
   const onlineOrders = orders.filter((item) => item.paymentMethod === "Online");
+  console.log(onlineOrders);
 
   const changeOrderClass=(status)=>{
       switch (status) {
@@ -73,11 +76,8 @@ const Orders = () => {
   };
 
   return (
-    // <Layout>
-
     <Layout>
       <div className="p-5">
-        {/* Header */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-5">
           <h1 className="font-semibold text-xl">Online Orders</h1>
 
@@ -90,11 +90,15 @@ const Orders = () => {
         </div>
 
         {/* Desktop Table */}
-      
-        <div className="">
-          <div className="w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm h-110">
-            <table className="min-w-225 w-full bg-white border-collapse">
-              <thead className="bg-gray-100">
+
+        <div className="flex justify-center items-center">
+          {onlineOrders.length == 0 && loading && < LoaderCircle className='animate-spin text-sky-600 mt-40' size={40}/>}
+        </div>
+
+        {onlineOrders.length !== 0 && (
+          <div className=" overflow-x-auto border border-gray-200 rounded-lg shadow-lg h-100">
+            <table className="min-w-225 w-full ">
+              <thead className="bg-gray-50 sticky top-0 z-10">
                 <tr>
                   <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
                     Order No.
@@ -122,7 +126,7 @@ const Orders = () => {
                 {onlineOrders.map((order) => (
                   <tr
                     key={order._id}
-                    className="hover:bg-gray-50 transition-colors"
+                    className="hover:bg-gray-200 transition-colors"
                   >
                     <td className="px-5 py-4 border-b text-sm font-mono">
                       #{order._id}
@@ -144,19 +148,19 @@ const Orders = () => {
 
                     <td className="px-5 py-4 border-b text-sm">
                       <div className="flex flex-col">
-                        {/* <span className="font-medium text-gray-800">
-                          {order.user.name}
+                        <span className="font-medium text-gray-800">
+                          {order.user?.name || "-"}
                         </span>
 
                         <span className="text-xs text-gray-500 break-all">
-                          {order.user.email}
-                        </span> */}
+                          {order.user?.email || "-"}
+                        </span>
                       </div>
                     </td>
 
                     <td className="px-5 py-4 border-b">
                       <select
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
+                        className=" border border-gray-300 text-gray-900 text-sm rounded-lg p-1"
                         defaultValue={order.orderStatus}
                         onChange={(e) =>
                           handleChangeStatus(order._id, e.target.value)
@@ -173,10 +177,10 @@ const Orders = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        )}
       </div>
     </Layout>
   );
 }
 
-export default withAuth(Orders);
+export default withAuth(OnlineOrders);

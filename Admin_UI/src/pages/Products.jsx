@@ -47,6 +47,7 @@ const Products = () => {
   async function Products() {
     const url = import.meta.env.VITE_SERVER_URL;
     try {
+      setLoading(true);
       const res = await fetch(`${url}/admin/product`, {
         method: "GET",
         credentials: "include",
@@ -77,6 +78,8 @@ const Products = () => {
       setCategories(data2.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   }
 
@@ -86,19 +89,17 @@ const Products = () => {
 
   return (
     <Layout>
-      <div className="p-5">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 ">
-          <div>
-            <h1 className="font-semibold text-xl">All Products</h1>
-            <p className="text-sm text-gray-500">
+      <div className="p-4 md:p-6 ">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-1 sm:mb-5">
+          <div className=" ">
+            <h1 className="font-semibold text-xl ">All Products</h1>
+            <p className="text-sm text-gray-500 hidden  md:block">
               Manage all products from here
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-            {/* Search */}
-            <div className="relative ">
+            <div className="relative">
               <Search
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -107,7 +108,8 @@ const Products = () => {
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-full sm:w-72 pl-10 pr-4 py-2 bg-white border  border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                className="w-full sm:w-72 pl-10 pr-2 py-1 sm:pr-4 sm:py-2 bg-white border  border-gray-300 rounded-lg 
+                shadow-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               />
             </div>
 
@@ -115,12 +117,17 @@ const Products = () => {
           </div>
         </div>
 
+        <div className="flex justify-center items-center">
+          {!products.length && loading && <h1>Loading...</h1>}
+        </div>
+
         {/* Table */}
-        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm h-100">
-          <table className="min-w-full">
+        {products.length !==0 && (
+       <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm h-100 ">
+          <table className="w-full min-w-187.5 border-collapse">
             <thead className="bg-gray-50 sticky top-0 z-10">
               <tr>
-                <th className="px-5 py-4 text-left text-sm font-semibold text-gray-700">
+                <th className="px-5 py-4 text-left text-sm font-semibold text-gray-700 tracking-wider">
                   Title
                 </th>
 
@@ -148,28 +155,21 @@ const Products = () => {
                   key={item._id}
                   className="border-t hover:bg-gray-50 transition"
                 >
-                  {/* Product */}
-                  {/* <td className="px-5 py-4">
-                    <div>
-                      <h2 className="font-medium text-gray-900 line-clamp-1">
-                        <Link to={`/product/${item.slug}`} >{item?.title}</Link>
-                      </h2>
-                    </div>
-                  </td> */}
+                 
                   <td className="px-5 py-4">
                     <Link
                       to={`/product/${item.slug}`}
-                      className="inline-flex items-center gap-1  hover:text-blue-800 hover:underline transition-colors"
+                      className="inline-flex items-center gap-1  hover:text-blue-800 hover:underline transition-colors "
                     >
-                      <span>{item.title}</span>
+                      <span className="line-clamp-1">{item.title}</span>
                       <ExternalLink size={14} />
                     </Link>
                   </td>
-                  {/* Category */}
+                
                   <td className="px-5 py-4 text-gray-600">
                     {item.category?.name || "-"}
                   </td>
-                  {/* Stock */}
+                 
                   <td className="px-5 py-4">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -178,10 +178,10 @@ const Products = () => {
                           : "bg-red-100 text-red-700"
                       }`}
                     >
-                      {item.stock} Items
+                      {item.stock} items
                     </span>
                   </td>
-                  {/* Price */}
+                 
                   <td className="px-5 py-4">
                     <div className="flex items-end ">
                       <span className="font-bold  text-sm text-black">
@@ -193,7 +193,7 @@ const Products = () => {
                       </span>
                     </div>
                   </td>
-                  {/* Actions */}
+                 
                   <td className="px-5 py-4">
                     <div className="flex justify-center gap-2">
                       <EditProduct
@@ -220,7 +220,8 @@ const Products = () => {
               </p>
             </div>
           )}
-        </div>
+        </div>  
+        )}
       </div>
     </Layout>
   );

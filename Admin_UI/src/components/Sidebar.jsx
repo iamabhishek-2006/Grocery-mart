@@ -5,10 +5,10 @@ import { appStore } from "../store/app.store";
 
 const Sidebar = () => {
   return (
-    <aside className="w-56 bg-white border-r border-slate-200 h-[calc(100vh-56px)]">
+    <aside className="w-56 bg-white border-r border-slate-200 h-[calc(100vh-50px)]">
       {/* Header */}
-      <div className="p-4 border-b border-slate-100">
-        <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">
+      <div className="p-3 border-b border-slate-100">
+        <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider ">
           Management
         </h2>
       </div>
@@ -18,7 +18,7 @@ const Sidebar = () => {
         <SidebarLinks icon={Home} link="/" label="Dashboard" />
         <SidebarLinks icon={List} link="/categories" label="Categories" />
         <SidebarLinks icon={Package} link="/products" label="Products" />
-        <SidebarLinks icon={CreditCard} link="/orders" label="Prepaid Orders" />
+        <SidebarLinks icon={CreditCard} link="/onlineorders" label="Online Orders" />
 
         <SidebarLinks icon={Wallet} link="/codOrders" label="COD Orders" />
         <SidebarLinks icon={User} link="/users" label="Users" />
@@ -38,12 +38,7 @@ const SidebarLinks = ({ link, label, icon }) => {
     <Link
       to={link}
       onClick={closeSidebar}
-      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200
-      ${
-        isActive
-          ? "bg-slate-100 text-slate-900 font-semibold"
-          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-      }`}
+      className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200"
     >
       <Icon size={20} />
       <span>{label}</span>

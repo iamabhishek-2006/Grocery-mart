@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import withAuth from '../components/withAuth';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const CODOrders = () => {
     const [orders, setOrders] = useState([]);
-    console.log(orders);
+    const [loading,setLoading]=useState(false);
+
     const handleChangeStatus=async(id,status)=>{
       try {
       const url=import.meta.env.VITE_SERVER_URL;
@@ -34,6 +36,7 @@ const CODOrders = () => {
   
     const getOrders = async () => {
       try {
+         setLoading(true);
         const url = import.meta.env.VITE_SERVER_URL;
         const res = await fetch(`${url}/admin/order`, {
           method:"GET",
@@ -46,6 +49,8 @@ const CODOrders = () => {
         setOrders(data.data);
       } catch (error) {
         console.log(error);
+      }finally{
+        setLoading(false);
       }
     };
   
@@ -85,12 +90,14 @@ const CODOrders = () => {
           </div>
         </div>
 
-        {/* Desktop Table */}
+        <div className="flex justify-center items-center">
+          {codOrders.length == 0 && loading && <h1>Loading...</h1>}
+        </div>
 
-        <div className="">
-          <div className="w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm h-110">
-            <table className="min-w-225 w-full bg-white border-collapse">
-              <thead className="bg-gray-100">
+        {codOrders.length > 0 && (
+          <div className=" overflow-x-auto border border-gray-200  rounded-lg shadow-sm h-100">
+            <table className="min-w-225 w-full border-collapse">
+              <thead className="bg-gray-50 sticky top-0 z-10">
                 <tr>
                   <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
                     Order No.
@@ -118,7 +125,7 @@ const CODOrders = () => {
                 {codOrders.map((order) => (
                   <tr
                     key={order._id}
-                    className="hover:bg-gray-50 transition-colors"
+                    className="hover:bg-gray-200 transition-colors"
                   >
                     <td className="px-5 py-4 border-b text-sm font-mono">
                       #{order._id}
@@ -140,19 +147,19 @@ const CODOrders = () => {
 
                     <td className="px-5 py-4 border-b text-sm">
                       <div className="flex flex-col">
-                         {/* <span className="font-medium text-gray-800">
-                          {order?.user.name || "-"}
+                        <span className="font-medium text-gray-800">
+                          {order.user?.name || "-"}
                         </span>
 
                         <span className="text-xs text-gray-500 break-all">
-                          {order?.user.email || "-"}
-                        </span> */}
+                          {order.user?.email || "-"}
+                        </span>
                       </div>
                     </td>
 
                     <td className="px-5 py-4 border-b">
                       <select
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-1"
                         defaultValue={order.orderStatus}
                         onChange={(e) =>
                           handleChangeStatus(order._id, e.target.value)
@@ -169,7 +176,7 @@ const CODOrders = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        )}
       </div>
     </Layout>
   );

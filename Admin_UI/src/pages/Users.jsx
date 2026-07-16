@@ -6,8 +6,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [admin, setAdmin] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  async function Users() {
+   async function Users() {
     const url = import.meta.env.VITE_SERVER_URL;
     try {
       setLoading(true);
@@ -58,9 +57,11 @@ const Users = () => {
 
             {/* Responsive Table */}
 
-            <div className="overflow-x-auto border border-gray-400 rounded-lg   ">
-              <table className="min-w-full bg-white">
-                <thead className="bg-gray-100">
+             {/* admin table */}
+
+            <div className="overflow-x-auto border border-gray-400  rounded-xl">
+              <table className="w-full  bg-white border-collapse ">
+                <thead className="bg-gray-50 sticky top-0 z-10">
                   <tr>
                     <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
                       Name
@@ -88,6 +89,8 @@ const Users = () => {
             </div>
           </div>
 
+            {/* user table */}
+          
           <div className="p-2">
             <div className="flex flex-col  sm:flex-row items-center justify-between gap-4 mb-5">
               <h1 className="font-semibold text-xl">Users</h1>
@@ -95,7 +98,7 @@ const Users = () => {
 
             {/* Responsive Table */}
 
-            <div className="overflow-hidden border border-gray-400 rounded-lg max-h-110  ">
+            <div className="overflow-hidden border border-gray-400  rounded-lg h-70 ">
               <table className="min-w-full bg-white">
                 <thead className="bg-gray-100">
                   <tr>
@@ -131,3 +134,4 @@ const Users = () => {
 };
 
 export default withAuth(Users);
+

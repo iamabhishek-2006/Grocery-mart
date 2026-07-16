@@ -10,6 +10,7 @@ const Login = () => {
   });
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [loading,setLoading]=useState(false);
 
   const handleChange = (e) => {
     const eleName = e.target.name;
@@ -21,6 +22,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const url = import.meta.env.VITE_SERVER_URL;
       const res = await fetch(`${url}/auth/login`, {
         method: "POST",
@@ -48,6 +50,8 @@ const Login = () => {
     } catch (error) {
       setIsSuccess(false);
       setMessage("Server error. Please try again later.");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -118,7 +122,7 @@ const Login = () => {
         </div>
 
         <button className="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-1 rounded-md text-lg cursor-pointer font-mono">
-          Login
+         {loading ? "wait...": "Login"}
         </button>
       </form>
     </div>
