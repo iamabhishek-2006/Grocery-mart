@@ -4,6 +4,7 @@ const getprofileAdmin = async (req, res) => {
   try {
     const { id } = req.user;
     const data = await profiileAdminDB(id);
+    console.log(data);
     return res.json({
       success: true,
       message:"admin details fetch successfully",

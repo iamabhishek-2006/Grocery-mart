@@ -45,4 +45,25 @@ const deletefolder = async (folderPath) => {
   }
 };
 
+// const deletefolder = async (folderPath) => {
+//   try {
+//     await cloudinary.api.delete_resources_by_prefix(folderPath);
+//     await cloudinary.api.delete_folder(folderPath);
+
+//     return { success: true };
+//   } catch (error) {
+//     // Folder exist nahi karta
+//     if (error.http_code === 404) {
+//       return { success: true };
+//     }
+
+//     console.log(error);
+
+//     return {
+//       success: false,
+//       error: error.message,
+//     };
+//   }
+// };
+
 module.exports = { uploadImage, deleteImage, deletefolder };

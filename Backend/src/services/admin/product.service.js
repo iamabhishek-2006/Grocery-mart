@@ -7,10 +7,6 @@ const createProductDB=async(body,slug)=>{
     return await product.populate("category");
 }
 
-// const updateProductDB = async (id,body) => {
-//   return await Product.findOneAndUpdate(id,body,{new:true});
-// };
-
 const updateProductDB = async (id, body) => {
   return await Product.findOneAndUpdate({ _id: id }, body, { returnDocument:"after" });
 };
@@ -28,28 +24,27 @@ const getImageByIdDB = async (id) => {
 const deleteProductDB= async (product_id) => {
 
   // folder path
-  const folderPath=`Grocery-mart/${product_id}`
+  const images=await Images.find({product_id});
 
-  // delete Complete folder from cloudinary
+  if(images.length>0){
+    const folderPath=`Grocery-mart/${product_id}`
 
-  const cloudinaryRes=await deletefolder(folderPath);
- 
-  if(!cloudinaryRes.success){
-    throw new Error("Cloudinary folder delete failed");
+    // delete Complete folder from cloudinary
+
+    const cloudinaryRes=await deletefolder(folderPath);
+    if(!cloudinaryRes.success){
+      throw new Error(cloudinaryRes.error);
+    }
   }
-
   // delete Images from Database
-
   await Images.deleteMany({product_id});
 
   return await Product.findByIdAndDelete(product_id);
 };
 
-
 const deleteProductImageDB = async (id) => {
   return await Images.findByIdAndDelete(id);
 };
-
 
 
 const getProductDB=async()=>{

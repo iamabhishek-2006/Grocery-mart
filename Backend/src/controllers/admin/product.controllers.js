@@ -4,22 +4,23 @@ const {createProductDB,updateProductDB,deleteProductDB,getProductDB,getProductby
 
 const createProduct = async (req, res) => {
   const body = req.body;
-  const { title, description, price, mrp, stock, category, weight, image } =
-    body;
+  const { title, description, price, mrp, stock, category, weight } = req.body;
 
-  if (!body) {
-    return res.json({
+  if (!title ||!description ||price == null ||mrp == null ||stock == null ||!category ||weight == null) {
+    return res.status(400).json({
       success: false,
-      error: "all fields are required",
+      error: "All fields are required",
+      required:["title","description","price","mrp","stock","category","weight"]
     });
   }
-
-  // if (mrp < price) {
-  //   return res.json({
-  //     success: false,
-  //     error: "MRP should be greater than price",
-  //   });
-  // }
+  if (mrp < price) {
+    return res.json({
+      success: false,
+      error: "MRP should be greater than price",
+    });
+  }
+  // console.log(typeof mrp, mrp);
+  // console.log(typeof price, price);
 
   const slug = generateSlug(body.title);
 
@@ -41,7 +42,7 @@ const createProduct = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      error: "something went wrong",
+      error: "something went wrong ",
     });
   }
 };
@@ -154,7 +155,6 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
-
   try {
     const data = await deleteProductDB(id);
     return res.status(200).json({
@@ -173,7 +173,6 @@ const getProductbySlug = async (req, res) => {
   const { slug } = req.params;
   try {
     const data = await getProductbySlugDB({ slug });
-    console.log(data);
     return res.status(200).json({ success: true, data: data });
   } catch (error) {
     console.log(error);

@@ -3,7 +3,7 @@ const Product = require("../../models/product");
 const User=require("../../models/user");
 
 const placeOrderCODService = async (userId, paymentMethod,totalAmount,shippingAddress,items) => {
-   
+   // cod order place
   if (!shippingAddress || !items || items.length === 0) {
     throw new Error("Invalid data");
   }

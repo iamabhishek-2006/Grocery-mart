@@ -2,6 +2,7 @@ const User = require("../../models/user");
 
 const profiileAdminDB = async (id) => {
   const getProfile = await User.findById(id).select("-password ");
+  console.log(getProfile);
   return getProfile;
 };
 

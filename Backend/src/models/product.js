@@ -8,7 +8,7 @@ const productSchema= new mongoose.Schema({
     mrp:{type:Number,required:true},
     stock:{type:Number,required:true},
     category:{type:mongoose.Schema.ObjectId,ref:"Category",required:true},
-    weight:{type:String,require:true},
+    weight:{type:String,required:true},
     // image:{type:String,required:true},
 },{timestamps:true});
 
