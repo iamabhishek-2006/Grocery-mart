@@ -19,8 +19,6 @@ const createProduct = async (req, res) => {
       error: "MRP should be greater than price",
     });
   }
-  // console.log(typeof mrp, mrp);
-  // console.log(typeof price, price);
 
   const slug = generateSlug(body.title);
 

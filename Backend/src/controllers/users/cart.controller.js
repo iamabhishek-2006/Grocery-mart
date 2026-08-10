@@ -1,12 +1,13 @@
 const {addToCartDB,updateCartDB,removeCartDB,getCartDB} = require("../../services/users/cart.service");
 
 const addToCart = async (req, res) => {
-  const { user, item, quantity } = req.body;
-  if (!user || !item || !quantity) {
+  const {id}=req.user;
+  const {  item, quantity } = req.body;
+  if (!item || !quantity) {
     return res.json({
       success: false,
       error: "all fields are required",
-      required: ["product", "quantity"],
+      required: ["item", "quantity"],
     });
   }
 
@@ -31,14 +32,11 @@ const addToCart = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
+  const {id}=req.user;
   try {
-    const data = await getCartDB();
-
+    const data = await getCartDB(id);
     if (data.error) {
-      return res.json({
-        success: false,
-        error: data.error,
-      });
+      return res.json({ success: false, error: data.error });
     }
 
     return res.status(200).json({
@@ -75,7 +73,6 @@ const updateCart = async (req, res) => {
 
 const removeCart = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
 
   try {
     const data = await removeCartDB(id);

@@ -61,7 +61,6 @@ const getProductsbySlug=async(req,res)=>{
 
 const getProductbyCategories=async(req,res)=>{
   const {category}=req.params;
-  console.log(category,'this category');
 
   try {
   const data=await getProductbyCategoriesDB(category);

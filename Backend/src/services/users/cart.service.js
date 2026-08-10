@@ -1,7 +1,7 @@
 const Cart = require("../../models/cart")
 
 const addToCartDB = async (user, item, quantity) => {
-
+  // check if user is already in cart
   const cartData=await Cart.findOne({user,item});
 
   if(!cartData){
@@ -14,8 +14,8 @@ const addToCartDB = async (user, item, quantity) => {
 }; 
 
 
-const getCartDB=async()=>{
-    return await Cart.find();
+const getCartDB=async(id)=>{
+    return await Cart.find({user:id});
 }
 
 const updateCartDB=async(id,body)=>{

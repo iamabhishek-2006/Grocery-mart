@@ -31,7 +31,7 @@ app.get("/",(req,res)=>{
     res.send("hellow world");
 })
 
-app.use("/public",publicRoutes);
+app.use("",publicRoutes);
 app.use("/auth",authRoutes);
 
 app.use(authMiddleware);
