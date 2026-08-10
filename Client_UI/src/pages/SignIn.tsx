@@ -1,47 +1,52 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
- function SignIn() {
-  const [loginInputs,setLoginInputs]=useState({
-    email:"",
-    password:"",
-    acceptTerms:false
+function SignIn() {
+  const [loginInputs, setLoginInputs] = useState({
+    email: "",
+    password: "",
+    acceptTerms: false,
   });
   console.log(loginInputs);
 
-  const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
-    const {name,value,type,checked}=e.target;
-    console.log(e.target.type,"type");
-    console.log(e.target.name,"name");
-    console.log(e.target.checked,"checked");
-    setLoginInputs({...loginInputs,[name]:type==="checkbox"? checked:value});
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
 
-   const submitHandler=async(e:React.FormEvent<HTMLFormElement>)=>{
-      try {
-      e.preventDefault();
-      const url=import.meta.env.VITE_SERVER_URL;
-      console.log(url);
-      const res=await fetch(`${url}/auth/login`,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
+    setLoginInputs({
+      ...loginInputs,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!loginInputs.acceptTerms) {
+      alert("please accepts and terms & conditions to continue");
+      return;
+    }
+    
+    try {
+      const url = import.meta.env.VITE_SERVER_URL;
+      const res = await fetch(`${url}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        credentials:"include",
-        body:JSON.stringify(loginInputs)
+        credentials: "include",
+        body: JSON.stringify(loginInputs),
       });
-      const data=await res.json();
-      if(!data.success){
+      const data = await res.json();
+      if (!data.success) {
         alert(data.error || "something went wrong");
         return;
       }
-      if(data.success){
-        window.location.href="/"
+      if (data.success) {
+        window.location.href = "/";
       }
-      } catch (error) {
-        console.log(error);
-      }
+    } catch (error) {
+      console.log(error);
     }
-
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -51,7 +56,6 @@ import React, { useState } from 'react'
         </h2>
 
         <form onSubmit={submitHandler} className="space-y-4">
-        
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email
@@ -101,7 +105,7 @@ import React, { useState } from 'react'
             Sign Up
           </button>
         </form>
-       
+
         <p className="text-center text-sm text-gray-600 mt-6">
           don't have an account?
           <a
@@ -116,4 +120,4 @@ import React, { useState } from 'react'
   );
 }
 
-export default SignIn
+export default SignIn;

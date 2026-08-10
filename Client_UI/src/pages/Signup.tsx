@@ -13,11 +13,15 @@ import React, { useState } from 'react'
   }
 
   const submitHandler=async(e:React.FormEvent<HTMLFormElement>)=>{
-    try {
     e.preventDefault();
-    const url=import.meta.env.VITE_SERVER_URL;
-    console.log(url);
-    const res=await fetch(`${url}/auth/register`,{
+    
+    if(!formInput.acceptTerms){
+      alert("please accepts and terms & conditions to continue");
+      return;
+    }
+    try {
+      const url=import.meta.env.VITE_SERVER_URL;
+      const res=await fetch(`${url}/auth/register`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -26,7 +30,6 @@ import React, { useState } from 'react'
       body:JSON.stringify(formInput)
     });
     const data=await res.json();
-    console.log(data);
     if(!data.success){
       alert(data.error || "something went wrong");
       return;
@@ -85,6 +88,7 @@ import React, { useState } from 'react'
               name="password"
               value={formInput.password}
               onChange={handleChange}
+              required
               placeholder="Create strong password"
               className="w-full border border-gray-300 rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-green-500"
             />

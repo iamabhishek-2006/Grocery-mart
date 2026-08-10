@@ -9,7 +9,7 @@ const LoginPopup = () => {
   if (!isLoginOpen) return null;
 
   return (
-    <div className="absolute top-15 right-3 w-72 bg-white rounded-2xl shadow border border-gray-200 overflow-hidden z-50">
+    <div className="fixed top-15 right-3 w-72 bg-white rounded-2xl shadow border border-gray-200 overflow-hidden z-50">
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4  text-black">
         <div className="flex items-center gap-3">
